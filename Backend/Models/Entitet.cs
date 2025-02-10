@@ -1,6 +1,7 @@
 ﻿namespace Backend.Models
 {
-    public class Entitet
+    internal abstract class Entitet
     {
+        public int? Sifra { get; set; }
     }
 }
