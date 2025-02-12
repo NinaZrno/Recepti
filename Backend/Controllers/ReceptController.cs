@@ -1,4 +1,5 @@
 ﻿using Backend.Data;
+using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
@@ -49,6 +50,48 @@ namespace Backend.Controllers
                 return BadRequest(e);
             }
         }
+
+        [HttpPut("{sifra: int}")]
+        public IActionResult Put (int sifra, Recept recept)
+        {
+            try
+            {
+                var receptBaza = _context.Recepti.Find(sifra);
+                if (receptBaza == null)
+                {
+                    return NotFound(new { poruka = $"Smjer s šifrom {sifra} ne postoji" });
+                }
+
+                receptBaza.Naziv = recept.Naziv;
+                receptBaza.Vrsta = recept.Vrsta;
+                receptBaza.Uputa = recept.Uputa;
+                receptBaza.Trajanje = recept.Trajanje;
+
+                _context.Recepti.Update(receptBaza);
+                _context.SaveChanges();
+                return Ok(receptBaza);
+            }
+
+            catch (Exception e)
+            {
+
+
+                return BadRequest(e);
+
+            }
+
+
+
+
+        }
+
+
+
+
+
+
+
+
 
     }
 }
