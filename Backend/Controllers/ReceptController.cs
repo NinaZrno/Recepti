@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Backend.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
 {
@@ -6,6 +7,48 @@ namespace Backend.Controllers
     [Route("api/v2/[controller]")]
     public class ReceptController : ControllerBase
     {
-       
+        private readonly BackendContext _context;
+
+        public ReceptController (BackendContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            try
+            {
+                return Ok(_context.Recepti);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [HttpGet("{sifra:int}")]
+        public IActionResult Get(int sifra)
+        {
+            if (sifra <= 0)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new { poruka = "Šifra mora biti pozitivan broj" });
+
+            }
+            try
+            {
+                var recept = _context.Recepti.Find(sifra);
+                if (recept == null)
+                {
+                    return NotFound(new { poruka = $"Smjer s šifrom {sifra} ne postoji" });
+                }
+                return Ok(recept);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
     }
 }
