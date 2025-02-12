@@ -1,7 +1,10 @@
-﻿namespace Backend.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Backend.Models
 {
-    internal abstract class Entitet
+    public abstract class Entitet
     {
+        [Key]
         public int? Sifra { get; set; }
     }
 }

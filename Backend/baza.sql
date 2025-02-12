@@ -1,101 +1,132 @@
-﻿-- Ovako se pišu komentari
-
+﻿
 use master;
 go
-drop database if exists edunovawp7;
+drop database if exists recepti;
 go
-create database edunovawp7 collate Croatian_CI_AS;
+create database recepti collate Croatian_CI_AS;
 go
-use edunovawp7;
+use recepti;
 go
 
-create table smjerovi(
-sifra int not null primary key identity(1,1), -- ovo je primarni ključ
-naziv varchar(50) not null,
-trajanje int null, -- null se ne mora pisati
-cijena decimal(18,2),
-vaucer bit,
-izvodiseod datetime
-);
-
-create table polaznici(
+create table recepti(
 sifra int not null primary key identity(1,1),
-ime varchar(50) not null,
-prezime varchar(50) not null,
-oib char(11),
-email varchar(100) not null
-);
+naziv varchar(50) not null,
+vrsta varchar(60) not null,
+uputa text not null,
+trajanje int 
 
-create table grupe(
-sifra int not null primary key identity(1,1), 
-naziv varchar(20) not null,
-smjer int not null references smjerovi(sifra), -- ovo je vanjski ključ
-predavac varchar(50)
 );
 
 
-create table clanovi(
-grupa int not null references grupe(sifra),
-polaznik int not null references polaznici(sifra)
+create table sastojci(
+sifra int not null primary key identity(1,1),
+naziv varchar(50) not null,
+mjerna_jedinica varchar(50) ,
+podrijetlo varchar(50) not null,
+energija decimal(18,2) not null,
+ugljikohidrati decimal(18,2) not null,
+masti decimal(18,2)not null,
+zasiceni_seceri decimal(18,2)not null,
+vlakna decimal(18,2)not null,
+bjelancevine decimal(18,2)not null,
+sol decimal(18,2) not null
+
 );
 
 
--- 1 (Ovo je šifra koju je dodjelila baza)
-insert into smjerovi 
-(naziv, trajanje, cijena, vaucer, izvodiseod) values
-('Web programiranje',225,1254.99,1,'2024-09-07 17:00:00');
+create table sastavi(
+sifra int not null primary key identity(1,1),
+recept int not null references recepti(sifra),
+sastojak int not null references sastojci(sifra),
+kolicina decimal(18,2) not null,
+napomena varchar(1000) 
 
-insert into smjerovi(naziv) values
--- 2
-('Java programer'),
--- 3
-('Serviser'),
--- 4
-('Knjigovodstvo');
+);
+
+-- 1
+insert into recepti (naziv, vrsta, uputa, trajanje) values
+( 'Fritule', 'Desert','1.Korak Sjedinite sve sastojke tako da dobijete glatku smjesu,
+ako smjesa nije dovoljno gusta, dodati brasna po potrebi 2.Korak Ugrijati ulje, paziti
+da se ulje ne pregrije. 3.Korak Sa dvije zlice manipulirati tijestom tako da dobijete
+okruglice. 4.Korak Kuglice ubaciti u zagrijano ulje, kada kuglice porumene treba ih 
+okrenuti na drugu stranu i cekati da se do kraja isprze. 5.Korak Kuglice premjestiti
+u posudu oblozenu papirnatim rucnicima i zatim sve posipati secerom u prahu. 6.Korak 
+Uzivajte u svojim fritulama.', 30);
+
+--1
+insert into sastojci( naziv, podrijetlo, energija, ugljikohidrati,
+masti, zasiceni_seceri, vlakna, bjelancevine, sol) values 
+( 'Jogurt', 'Rusija', 60, 4.50, 2.80, 4.50, 0.17, 3.70, 0.13);
+
+--2
+insert into sastojci( naziv, podrijetlo, energija, ugljikohidrati,
+masti, zasiceni_seceri, vlakna, bjelancevine, sol) values 
+('Jaje', 'EU', 167, 1.50, 11.00, 2.50, 0.00, 13.00, 0.12);
+
+--3
+insert into sastojci( naziv, podrijetlo, energija, ugljikohidrati,
+masti, zasiceni_seceri, vlakna, bjelancevine, sol) values 
+('Šećer', 'Polinezija', 387, 0.00, 0.00, 100.00, 0.00, 0.00, 0.00)
+
+--4
+insert into sastojci( naziv, podrijetlo, energija, ugljikohidrati,
+masti, zasiceni_seceri, vlakna, bjelancevine, sol) values 
+('Vanilin sećer', 'Madagaskar', 387, 0.00, 0.00, 99.00, 0.00, 0.00, 1.00);
+
+--5
+insert into sastojci( naziv, podrijetlo, energija, ugljikohidrati,
+masti, zasiceni_seceri, vlakna, bjelancevine, sol) values 
+('Sol','Kina',0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 100.00);
+
+--6
+insert into sastojci( naziv, podrijetlo, energija, ugljikohidrati,
+masti, zasiceni_seceri, vlakna, bjelancevine, sol) values 
+('Prašak za pecivo', 'Engleska', 4.70, 0.00, 0.00, 0.00, 0.00, 1.25, 0.28);
+
+--7
+insert into sastojci( naziv, podrijetlo, energija, ugljikohidrati,
+masti, zasiceni_seceri, vlakna, bjelancevine, sol) values 
+('Rakija','Srbija', 185.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00);
+
+--8
+insert into sastojci( naziv, podrijetlo, energija, ugljikohidrati,
+masti, zasiceni_seceri, vlakna, bjelancevine, sol) values
+('Brašno','Srednji Istok', 364, 73.00, 1.70, 2.20, 2.70, 12.00, 0.12);
 
 
-insert into grupe (naziv, smjer) values
-('WP6',1),
-('WP7',1),
-('JP27',2),
-('K12',4);
+
+--1
+insert into sastavi(recept,sastojak, kolicina, napomena) values
+(1,1, 200.00, 'Jogurt držati izvan hladnjaka 30 minuta prije korištenja');
+
+--2
+insert into sastavi(recept,sastojak, kolicina, napomena) values
+(1,2,1.00, 'Koristiti jaje srednje veličine');
+
+--3
+insert into sastavi(recept,sastojak, kolicina) values
+(1,3,70.00);
 
 
-INSERT INTO polaznici (ime, prezime, email) VALUES 
-('Ante', 'Janković', 'antejankovic86@gmail.com'),
-('Stojan', 'Carić', 'stojancaric8@gmail.com'),
-('Željko', 'Lučan', 'lucko1987vk@gmail.com'),
-('Petar', 'Gudelj', 'gudelj.petar2005@gmail.com'),
-('Krunoslav', 'Popić', 'kpopic@gmail.com'),
-('Jurica', 'Ognjenović', 'ognjenovicjurica0610@gmail.com'),
-('Lea', 'Bartoš', 'talulea@gmail.com'),
-('Tomislav', 'Nađ', 'tomislav.nadj@gmail.com'),
-('Martin', 'Galik', 'gale1508@gmail.com'),
-('Ivan', 'Mišić', 'ivanmisic983@gmail.com'),
-('Mirjam', 'Koški', 'mir.jam975@gmail.com'),
-('Željko', 'Koški', 'zeljko.koski@gmail.com'),
-('Mirza', 'Delagić', 'mirzadelagic@gmail.com'),
-('Bruno', 'Čačić', 'bruno.cacic@gmail.com'),
-('David', 'Nađ', 'david08.nadj@gmail.com'),
-('Antonio', 'Macanga', 'macanga.antonio@gmail.com'),
-('Nina', 'Zrno', 'ninaradakovic1234@icloud.com'),
-('Marko', 'Berberović', 'marko.berberovic@skole.hr'),
-('Tomislav', 'Nebes', 'tomislav.nebes@gmail.com'),
-('Klara', 'Nađ', 'klara.nad@gmail.com'),
-('Maja', 'Šteler', 'maja5steler@gmail.com'),
-('Milan', 'Drača', 'milan.draca@gmail.com'),
-('Marin', 'Vranješ', 'marinvranjes123@gmail.com'),
-('Boris', 'Bukovec', 'botaosijek@gmail.com'),
-('Luka', 'Jurak', 'jurakluka18@gmail.com'),
-('Ivan', 'Strmečki', 'ivan.strmecki8@gmail.com'),
-('Bruno', 'Bašić', 'brunobasic031@gmail.com');
+--4
+insert into sastavi(recept,sastojak, kolicina) values
+(1,4,1);
+
+--5
+insert into sastavi(recept,sastojak, kolicina) values
+(1,5,7.00);
+
+--6
+insert into sastavi(recept,sastojak, kolicina) values
+(1,6, 1.00);
+
+--7
+insert into sastavi(recept,sastojak, kolicina) values
+(1,7, 1.00);
+
+--8
+insert into sastavi(recept,sastojak, kolicina, napomena) values
+(1,8, 200.00, 'Najbolje koristiti glatko brašno');
 
 
-insert into clanovi (grupa,polaznik) values
-(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),
-(2,7),(2,8),(2,9),(2,10),(2,11),(2,12),
-(2,13),(2,14),(2,15),(2,16),(2,17),(2,18),
-(2,19),(2,20),(2,21),(2,22),(2,23),(2,24),
-(2,25),(2,26),(2,27),
 
-(3,7),(3,17),(3,27);
