@@ -1,3 +1,6 @@
+using Backend.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +10,11 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddSwaggerGen();
+
+// dodavanje db contexta
+builder.Services.AddDbContext<BackendContext>(o => {
+    o.UseSqlServer(builder.Configuration.GetConnectionString("BackendContext"));
+});
 
 var app = builder.Build();
 
