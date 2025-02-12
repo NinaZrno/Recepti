@@ -51,7 +51,7 @@ namespace Backend.Controllers
             }
         }
 
-        [HttpPut("{sifra: int}")]
+        [HttpPut("{sifra:int}")]
         public IActionResult Put (int sifra, Recept recept)
         {
             try
