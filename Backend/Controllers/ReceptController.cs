@@ -80,13 +80,46 @@ namespace Backend.Controllers
 
             }
 
-
-
-
         }
 
+        [HttpPost]
+        public IActionResult Post (Recept recept)
+        {
+            try
+            {
+                _context.Recepti.Add(recept);
+                _context.SaveChanges();
+                return StatusCode(StatusCodes.Status201Created, recept);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
 
-
+        [HttpDelete("{sifra:int}")]
+        public IActionResult Delete(int sifra)
+        {
+            if (sifra <= 0)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new { poruka = "Šifra mora biti pozitivan broj" });
+            }
+            try
+            {
+                var recept= _context.Recepti.Find(sifra);
+                if (recept == null)
+                {
+                    return NotFound(new { poruka = $"Smjer s šifrom {sifra} ne postoji" });
+                }
+                _context.Recepti.Remove(recept);
+                _context.SaveChanges();
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
 
 
 
