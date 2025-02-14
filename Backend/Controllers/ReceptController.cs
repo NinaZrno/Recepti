@@ -41,7 +41,7 @@ namespace Backend.Controllers
                 var recept = _context.Recepti.Find(sifra);
                 if (recept == null)
                 {
-                    return NotFound(new { poruka = $"Smjer s šifrom {sifra} ne postoji" });
+                    return NotFound(new { poruka = $"Recept s šifrom {sifra} ne postoji" });
                 }
                 return Ok(recept);
             }
@@ -59,7 +59,7 @@ namespace Backend.Controllers
                 var receptBaza = _context.Recepti.Find(sifra);
                 if (receptBaza == null)
                 {
-                    return NotFound(new { poruka = $"Smjer s šifrom {sifra} ne postoji" });
+                    return NotFound(new { poruka = $"Recept s šifrom {sifra} ne postoji" });
                 }
 
                 receptBaza.Naziv = recept.Naziv;
@@ -109,7 +109,7 @@ namespace Backend.Controllers
                 var recept= _context.Recepti.Find(sifra);
                 if (recept == null)
                 {
-                    return NotFound(new { poruka = $"Smjer s šifrom {sifra} ne postoji" });
+                    return NotFound(new { poruka = $"Recept s šifrom {sifra} ne postoji" });
                 }
                 _context.Recepti.Remove(recept);
                 _context.SaveChanges();
