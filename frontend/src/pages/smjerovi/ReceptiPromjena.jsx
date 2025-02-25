@@ -47,7 +47,7 @@ export default function ReceptiPromjena(){
                 naziv: podaci.get('naziv'),
                 vrsta: podaci.get('vrsta'),
                 uputa: podaci.get('uputa'),
-                trajanje: moment.utc(podaci.get('trajanje'))
+                trajanje: parseInt(podaci.get('trajanje'))
             }
         );
     }
@@ -78,7 +78,7 @@ export default function ReceptiPromjena(){
 
         <Form.Group controlId="trajanje">
         <Form.Label>Trajanje</Form.Label>
-            <Form.Control type="time" name="trajanje" 
+            <Form.Control type="number" name="trajanje" 
             defaultValue={recept.trajanje}/>
             </Form.Group>
         <hr/>

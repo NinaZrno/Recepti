@@ -28,7 +28,7 @@ export default function ReceptiDodaj(){
                 naziv: podaci.get('naziv'),
                 vrsta: podaci.get('vrsta'),
                 uputa: podaci.get('uputa'),
-                trajanje: moment.utc(podaci.get('trajanje'))
+                trajanje: parseInt(podaci.get('trajanje'))
             }
         );
     }
@@ -56,7 +56,7 @@ export default function ReceptiDodaj(){
 
         <Form.Group controlId="trajanje">
         <Form.Label>Trajanje</Form.Label>
-        <Form.Control type="time" name="trajanje" required />
+        <Form.Control type="number" name="trajanje" required />
         </Form.Group>
 
         <hr/>
