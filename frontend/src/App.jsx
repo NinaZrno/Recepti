@@ -5,9 +5,9 @@ import NavBarEdunova from './components/NavBarEdunova'
 import { Route, Routes } from 'react-router-dom'
 import { RouteNames } from './constants'
 import Pocetna from './pages/Pocetna'
-import ReceptiPregled from './pages/smjerovi/ReceptiPregled'
-import ReceptiDodaj from './pages/smjerovi/ReceptiDodaj'
-import ReceptiPromjena from './pages/smjerovi/ReceptiPromjena'
+import ReceptiPregled from './pages/recepti/ReceptiPregled'
+import ReceptiDodaj from './pages/recepti/ReceptiDodaj'
+import ReceptiPromjena from './pages/recepti/ReceptiPromjena'
 
 
 
@@ -26,7 +26,7 @@ function App() {
         </Routes>
 
         <hr />
-        &copy; Edunova 2025
+        &copy; Recepti 2025
       </Container>
      
     </>
