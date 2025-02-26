@@ -52,7 +52,7 @@ export default function ReceptiPregled(){
         <Link
         to={RouteNames.RECEPT_NOVI}
         className="btn btn-success siroko"
-        >Dodaj novi smjer</Link>
+        >Dodaj novi recept</Link>
         <Table striped bordered hover responsive>
             <thead>
                 <tr>

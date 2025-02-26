@@ -28,8 +28,8 @@ export default function ReceptiPromjena(){
         dohvatiRecept();
     },[])
 
-    async function promjena(smjer){
-        const odgovor = await ReceptService.promjena(routeParams.sifra,smjer);
+    async function promjena(recept){
+        const odgovor = await ReceptService.promjena(routeParams.sifra,recept);
         if(odgovor.greska){
             alert(odgovor.poruka)
             return
