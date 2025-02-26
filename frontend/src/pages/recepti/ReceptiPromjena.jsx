@@ -54,7 +54,7 @@ export default function ReceptiPromjena(){
 
     return(
     <>
-    Promjena smjera
+    Promjena recepta
     <Form onSubmit={odradiSubmit}>
 
         <Form.Group controlId="naziv">
