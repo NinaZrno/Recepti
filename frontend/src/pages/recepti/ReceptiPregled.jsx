@@ -24,24 +24,11 @@ export default function ReceptiPregled(){
     },[])
 
 
-    function formatirajDatum(datum){
-        if(datum==null){
-            return 'Nije definirano'
-        }
-        return moment.utc(datum).format('DD. MM. YYYY.')
-    }
+    
 
-    function vaucer(v){
-        if(v==null) return 'gray'
-        if(v) return 'green'
-        return 'red'
-    }
+   
 
-    function vaucerText(v){
-        if(v==null) return 'Nije definirano'
-        if(v) return 'Vaučer'
-        return 'NIJE vaučer'
-    }
+   
 
     function obrisi(sifra){
         if(!confirm('Sigurno obrisati')){
@@ -63,7 +50,7 @@ export default function ReceptiPregled(){
     return(
         <>
         <Link
-        to={RouteNames.SMJER_NOVI}
+        to={RouteNames.RECEPT_NOVI}
         className="btn btn-success siroko"
         >Dodaj novi smjer</Link>
         <Table striped bordered hover responsive>

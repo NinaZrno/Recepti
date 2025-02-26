@@ -15,7 +15,7 @@ export default function ReceptiDodaj(){
             alert(odgovor.poruka)
             return
         }
-        navigate(RouteNames.SMJER_PREGLED)
+        navigate(RouteNames.RECEPT_PREGLED)
     }
 
     function odradiSubmit(e){ // e je event
@@ -64,13 +64,13 @@ export default function ReceptiDodaj(){
         <Row>
             <Col xs={6} sm={6} md={3} lg={2} xl={6} xxl={6}>
                 <Link
-                to={RouteNames.SMJER_PREGLED}
+                to={RouteNames.RECEPT_PREGLED}
                 className="btn btn-danger siroko"
                 >Odustani</Link>
             </Col>
             <Col xs={6} sm={6} md={9} lg={10} xl={6} xxl={6}>
                 <Button variant="success" type="submit" className="siroko">
-                    Dodaj smjer
+                    Dodaj recept
                 </Button>
             </Col>
         </Row>

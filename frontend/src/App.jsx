@@ -20,9 +20,9 @@ function App() {
         
         <Routes>
           <Route path={RouteNames.HOME} element={<Pocetna />} />
-          <Route path={RouteNames.SMJER_PREGLED} element={<ReceptiPregled />} />
-          <Route path={RouteNames.SMJER_NOVI} element={<ReceptiDodaj />} />
-          <Route path={RouteNames.SMJER_PROMJENA} element={<ReceptiPromjena />} />
+          <Route path={RouteNames.RECEPT_PREGLED} element={<ReceptiPregled />} />
+          <Route path={RouteNames.RECEPT_NOVI} element={<ReceptiDodaj />} />
+          <Route path={RouteNames.RECEPT_PROMJENA} element={<ReceptiPromjena />} />
         </Routes>
 
         <hr />
