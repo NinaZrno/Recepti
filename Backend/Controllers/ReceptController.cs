@@ -1,6 +1,9 @@
-﻿using Backend.Data;
+﻿using AutoMapper;
+using Backend.Data;
 using Backend.Models;
+using Backend.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace Backend.Controllers
 {
@@ -16,11 +19,11 @@ namespace Backend.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public ActionResult<List<ReceptDTORead>> Get()
         {
             try
-            {
-                return Ok(_context.Recepti);
+            {   
+                return Ok(_mapper.Map<List<ReceptDTORead>>(_context.Recepti));
             }
             catch (Exception e)
             {
@@ -29,71 +32,88 @@ namespace Backend.Controllers
         }
 
         [HttpGet("{sifra:int}")]
-        public IActionResult Get(int sifra)
+        public ActionResult<ReceptDTOInsertUpdate> GetBySifra(int sifra)
         {
-            if (sifra <= 0)
+            if (!ModelState.IsValid)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new { poruka = "Šifra mora biti pozitivan broj" });
-
+                return BadRequest(new { poruka = ModelState });
             }
+            Recept? e;
             try
             {
-                var recept = _context.Recepti.Find(sifra);
-                if (recept == null)
-                {
-                    return NotFound(new { poruka = $"Recept s šifrom {sifra} ne postoji" });
-                }
-                return Ok(recept);
+                e = _context.Recepti.Find(sifra);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return BadRequest(e);
+                return BadRequest(new { poruka = ex.Message });
             }
+            if (e == null)
+            {
+                return NotFound(new { poruka = "Recept ne postoji u bazi" });
+            }
+
+            return Ok(_mapper.Map<ReceptDTOInsertUpdate>(e));
         }
 
-        [HttpPut("{sifra:int}")]
-        public IActionResult Put (int sifra, Recept recept)
+        [HttpPut]
+        [Route("{sifra:int}")]
+        [Produces("application/json")]
+
+        public IActionResult Put (int sifra, Recept recept, ReceptDTOInsertUpdate dto
+            )
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { poruka = ModelState });
+            }
             try
             {
-                var receptBaza = _context.Recepti.Find(sifra);
-                if (receptBaza == null)
+                Recept? e;
+                try
                 {
-                    return NotFound(new { poruka = $"Recept s šifrom {sifra} ne postoji" });
+                    e = _context.Recepti.Find(sifra);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(new { poruka = ex.Message });
+                }
+                if (e == null)
+                {
+                    return NotFound(new { poruka = "Recept ne postoji u bazi" });
                 }
 
-                receptBaza.Naziv = recept.Naziv;
-                receptBaza.Vrsta = recept.Vrsta;
-                receptBaza.Uputa = recept.Uputa;
-                receptBaza.Trajanje = recept.Trajanje;
+                e = _mapper.Map(dto, e);
 
-                _context.Recepti.Update(receptBaza);
+                _context.Recepti.Update(e);
                 _context.SaveChanges();
-                return Ok(receptBaza);
+
+                return Ok(new { poruka = "Uspješno promjenjeno" });
             }
-
-            catch (Exception e)
+            catch (Exception ex)
             {
-
-
-                return BadRequest(e);
-
+                return BadRequest(new { poruka = ex.Message });
             }
 
         }
 
         [HttpPost]
-        public IActionResult Post (Recept recept)
+        public IActionResult Post (ReceptDTOInsertUpdate dto
+            )
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { poruka = ModelState });
+            }
             try
             {
-                _context.Recepti.Add(recept);
+                var e = _mapper.Map<Recept>(dto);
+                _context.Recepti.Add(e);
                 _context.SaveChanges();
-                return StatusCode(StatusCodes.Status201Created, recept);
+                return StatusCode(StatusCodes.Status201Created, _mapper.Map<ReceptDTORead>(e));
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return BadRequest(e);
+                return BadRequest(new { poruka = ex.Message });
             }
         }
 
