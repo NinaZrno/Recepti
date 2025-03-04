@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers
 {
-    public class GlavniController
-    {
+    
+    
         public abstract class GlavniController : ControllerBase
         {
 
@@ -25,5 +25,5 @@ namespace Backend.Controllers
             }
 
         }
-    }
+    
 }
