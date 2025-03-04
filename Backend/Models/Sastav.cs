@@ -4,9 +4,9 @@
     {
        
         public int Recept { get; set; }
-        public string? Sastojak { get; set; }
-        public decimal? Kolicina { get; set; }
-        public string? Napomena { get; set; }
+        public string Sastojak { get; set; } = "";
+        public decimal Kolicina { get; set; }
+        public string Napomena { get; set; } = "";
 
 
 
