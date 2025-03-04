@@ -117,27 +117,37 @@ namespace Backend.Controllers
             }
         }
 
-        [HttpDelete("{sifra:int}")]
+        [HttpDelete]
+        [Route("{sifra:int}")]
+        [Produces("application/json")]
         public IActionResult Delete(int sifra)
         {
-            if (sifra <= 0)
+            if (!ModelState.IsValid)
             {
-                return StatusCode(StatusCodes.Status404NotFound, new { poruka = "Šifra mora biti pozitivan broj" });
+                return BadRequest(new { poruka = ModelState });
             }
             try
             {
-                var recept= _context.Recepti.Find(sifra);
-                if (recept == null)
+                Recept? e;
+                try
                 {
-                    return NotFound(new { poruka = $"Recept s šifrom {sifra} ne postoji" });
+                    e = _context.Recepti.Find(sifra);
                 }
-                _context.Recepti.Remove(recept);
+                catch (Exception ex)
+                {
+                    return BadRequest(new { poruka = ex.Message });
+                }
+                if (e == null)
+                {
+                    return NotFound("Recept ne postoji u bazi");
+                }
+                _context.Recepti.Remove(e);
                 _context.SaveChanges();
-                return NoContent();
+                return Ok(new { poruka = "Uspješno obrisano" });
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return BadRequest(e);
+                return BadRequest(new { poruka = ex.Message });
             }
         }
 
