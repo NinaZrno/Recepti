@@ -2,7 +2,7 @@
 {
     public record SastavDTORead(
        int Sifra,
-       int Recept,
+       int Receptsifra,
        string Sastojak,
          decimal Kolicina,
             string Napomena
