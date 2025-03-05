@@ -9,14 +9,8 @@ namespace Backend.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class ReceptController : ControllerBase
+    public class ReceptController(BackendContext context, IMapper mapper) : GlavniController(context, mapper)
     {
-        private readonly BackendContext _context;
-
-        public ReceptController (BackendContext context)
-        {
-            _context = context;
-        }
 
         [HttpGet]
         public ActionResult<List<ReceptDTORead>> Get()
@@ -59,8 +53,7 @@ namespace Backend.Controllers
         [Route("{sifra:int}")]
         [Produces("application/json")]
 
-        public IActionResult Put (int sifra, Recept recept, ReceptDTOInsertUpdate dto
-            )
+        public IActionResult Put (int sifra, ReceptDTOInsertUpdate dto)
         {
             if (!ModelState.IsValid)
             {

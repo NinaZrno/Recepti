@@ -11,7 +11,10 @@ namespace Backend.Mapping
         {
             CreateMap<Recept, ReceptDTORead>();
             CreateMap<ReceptDTOInsertUpdate, Recept>();
-            CreateMap< Recept, ReceptDTOInsertUpdate>();
+            CreateMap<Recept, ReceptDTOInsertUpdate>();
+
+
+            CreateMap<Sastojak, SastojakDTORead>();
 
         }
 
