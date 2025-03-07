@@ -1,153 +1,118 @@
-﻿using AutoMapper;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Backend.Controllers;
 using Backend.Data;
-using Backend.Models;
 using Backend.Models.DTO;
-using Microsoft.AspNetCore.Mvc;
+using Backend.Models;
 
-
-namespace Backend.Controllers
+[ApiController]
+[Route("api/v1/[controller]")]
+public class ReceptController : GlavniController
 {
-    [ApiController]
-    [Route("api/v1/[controller]")]
-    public class ReceptController(BackendContext context, IMapper mapper) : GlavniController(context, mapper)
+    private readonly BackendContext _context;
+    private readonly IMapper _mapper;
+
+    public ReceptController(BackendContext context, IMapper mapper) : base(context, mapper)
     {
+        _context = context;
+        _mapper = mapper;
+    }
 
-        [HttpGet]
-        public ActionResult<List<ReceptDTORead>> Get()
+    [HttpGet]
+    public async Task<ActionResult<List<ReceptDTORead>>> Get()
+    {
+        try
         {
-            try
-            {   
-                return Ok(_mapper.Map<List<ReceptDTORead>>(_context.Recepti));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
+            var recepti = await _context.Recepti.ToListAsync();
+            return Ok(_mapper.Map<List<ReceptDTORead>>(recepti));
         }
-
-        [HttpGet("{sifra:int}")]
-        public ActionResult<ReceptDTOInsertUpdate> GetBySifra(int sifra)
+        catch (Exception e)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new { poruka = ModelState });
-            }
-            Recept? e;
-            try
-            {
-                e = _context.Recepti.Find(sifra);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { poruka = ex.Message });
-            }
-            if (e == null)
-            {
+            return BadRequest(new { poruka = e.Message });
+        }
+    }
+
+    [HttpGet("{sifra:int}")]
+    public async Task<ActionResult<ReceptDTOInsertUpdate>> GetBySifra(int sifra)
+    {
+        try
+        {
+            var recept = await _context.Recepti.FindAsync(sifra);
+            if (recept == null)
                 return NotFound(new { poruka = "Recept ne postoji u bazi" });
-            }
 
-            return Ok(_mapper.Map<ReceptDTOInsertUpdate>(e));
+            return Ok(_mapper.Map<ReceptDTOInsertUpdate>(recept));
         }
-
-        [HttpPut]
-        [Route("{sifra:int}")]
-        [Produces("application/json")]
-
-        public IActionResult Put (int sifra, ReceptDTOInsertUpdate dto)
+        catch (Exception e)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new { poruka = ModelState });
-            }
-            try
-            {
-                Recept? e;
-                try
-                {
-                    e = _context.Recepti.Find(sifra);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(new { poruka = ex.Message });
-                }
-                if (e == null)
-                {
-                    return NotFound(new { poruka = "Recept ne postoji u bazi" });
-                }
-
-                e = _mapper.Map(dto, e);
-
-                _context.Recepti.Update(e);
-                _context.SaveChanges();
-
-                return Ok(new { poruka = "Uspješno promjenjeno" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { poruka = ex.Message });
-            }
-
+            return BadRequest(new { poruka = e.Message });
         }
+    }
 
-        [HttpPost]
-        public IActionResult Post (ReceptDTOInsertUpdate dto
-            )
+    [HttpPut("{sifra:int}")]
+    public async Task<IActionResult> Put(int sifra, [FromBody] ReceptDTOInsertUpdate dto)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(new { poruka = ModelState });
+
+        try
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new { poruka = ModelState });
-            }
-            try
-            {
-                var e = _mapper.Map<Recept>(dto);
-                _context.Recepti.Add(e);
-                _context.SaveChanges();
-                return StatusCode(StatusCodes.Status201Created, _mapper.Map<ReceptDTORead>(e));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { poruka = ex.Message });
-            }
-        }
+            var recept = await _context.Recepti.FindAsync(sifra);
+            if (recept == null)
+                return NotFound(new { poruka = "Recept ne postoji u bazi" });
 
-        [HttpDelete]
-        [Route("{sifra:int}")]
-        [Produces("application/json")]
-        public IActionResult Delete(int sifra)
+            _mapper.Map(dto, recept);
+            _context.Recepti.Update(recept);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { poruka = "Uspješno promijenjeno" });
+        }
+        catch (Exception e)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new { poruka = ModelState });
-            }
-            try
-            {
-                Recept? e;
-                try
-                {
-                    e = _context.Recepti.Find(sifra);
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(new { poruka = ex.Message });
-                }
-                if (e == null)
-                {
-                    return NotFound("Recept ne postoji u bazi");
-                }
-                _context.Recepti.Remove(e);
-                _context.SaveChanges();
-                return Ok(new { poruka = "Uspješno obrisano" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { poruka = ex.Message });
-            }
+            return BadRequest(new { poruka = e.Message });
         }
+    }
 
+    [HttpPost]
+    public async Task<IActionResult> Post([FromBody] ReceptDTOInsertUpdate dto)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(new { poruka = ModelState });
 
+        try
+        {
+            var recept = _mapper.Map<Recept>(dto);
+            await _context.Recepti.AddAsync(recept);
+            await _context.SaveChangesAsync();
 
+            return CreatedAtAction(nameof(GetBySifra), new { sifra = recept.Sifra }, _mapper.Map<ReceptDTORead>(recept));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(new { poruka = e.Message });
+        }
+    }
 
+    [HttpDelete("{sifra:int}")]
+    public async Task<IActionResult> Delete(int sifra)
+    {
+        try
+        {
+            var recept = await _context.Recepti.FindAsync(sifra);
+            if (recept == null)
+                return NotFound(new { poruka = "Recept ne postoji u bazi" });
 
+            _context.Recepti.Remove(recept);
+            await _context.SaveChangesAsync();
 
+            return Ok(new { poruka = "Uspješno obrisano" });
+        }
+        catch (Exception e)
+        {
+            return BadRequest(new { poruka = e.Message });
+        }
     }
 }
