@@ -1,7 +1,7 @@
 ﻿namespace Backend.Models.DTO
 {
     public record ReceptDTORead(
-        int Sifra,
+        int Sifra ,
         string Naziv,
         string Vrsta,
         string Uputa,
