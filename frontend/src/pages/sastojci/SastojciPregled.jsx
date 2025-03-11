@@ -62,7 +62,7 @@ export default function SastojciPregled(){
                     <th>Energija</th>
                     <th>Ugljikohidrati</th>
                     <th>Masti</th>
-                    <th>Zasiceni_seceri</th>
+                    <th>Zasićeni šećeri</th>
                     <th>Vlakna</th>
                     <th>Bjelancevine</th>
                     <th>Sol</th>
@@ -75,7 +75,7 @@ export default function SastojciPregled(){
                             {sastojak.naziv}
                         </td>
                         <td>
-                            {sastojak.mjerna_jedinica}
+                            {sastojak.mjernaJedinica}
                         </td>
                         <td>
                             {sastojak.podrijetlo}
@@ -90,7 +90,7 @@ export default function SastojciPregled(){
                             {sastojak.masti}
                         </td>
                         <td>
-                            {sastojak.zasiceni_seceri}
+                            {sastojak.zasiceniSeceri}
                         </td>
                         <td>
                             {sastojak.vlakna}

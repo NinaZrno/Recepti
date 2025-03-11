@@ -28,6 +28,9 @@ export default function NavBarEdunova(){
                     <NavDropdown.Item
                     onClick={()=>navigate(RouteNames.RECEPT_PREGLED)}
                     >Recepti</NavDropdown.Item>
+                    <NavDropdown.Item
+                    onClick={()=>navigate(RouteNames.SASTOJAK_PREGLED)}
+                    >Sastojci</NavDropdown.Item>
                     
                     </NavDropdown>
                     <Nav.Link href={PRODUKCIJA + '/swagger'} target='_blank'>Swagger</Nav.Link>

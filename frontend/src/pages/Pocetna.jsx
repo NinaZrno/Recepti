@@ -1,5 +1,5 @@
 import React from 'react';
-import slikazanaslovnu from '...assets/slikazanaslovnu.jpeg';
+import slikazanaslovnu from '../assets/slikazanaslovnu.jpg';
 import '../App.css';
 
 
@@ -13,11 +13,17 @@ export default function Pocetna(){
         backgroundPosition: 'center',
         height: '80vh',
         width: '84vw'
+    }
 
    
     return(
+      
         <>
-        Dobrodošli na moju aplikaciju
+        <div style={backgroundStyle}>
+         Dobrodošli na moju aplikaciju
+        </div>
+
         </>
+       
     )
 }
