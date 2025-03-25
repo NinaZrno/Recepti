@@ -43,7 +43,7 @@ export default function SastojciPregled(){
             alert(odgovor.poruka);
             return;
         }
-        dohvatiSastojak();
+        dohvatiSastojke();
     }
 
 
@@ -105,7 +105,7 @@ export default function SastojciPregled(){
 
                         <td>
                             <Button
-                            onClick={()=>navigate(`/recepti/${sastojak.sifra}`)}
+                            onClick={()=>navigate(`/sastojci/${sastojak.sifra}`)}
                             >Promjena</Button>
                             &nbsp;&nbsp;&nbsp;
                             <Button

@@ -4,7 +4,8 @@ namespace Backend.Models.DTO
 {
     public record SastojakDTOInsertUpdate(
         [Required(ErrorMessage = "Naziv obavezno")]
-        int Naziv,
+        string Naziv,
+        string MjernaJedinica,
         [Required(ErrorMessage = "Podrijetlo obavezno")]
         string Podrijetlo,
         [Required(ErrorMessage = "Energija obavezno")]
@@ -13,6 +14,7 @@ namespace Backend.Models.DTO
         decimal Ugljikohidrati,
         [Required(ErrorMessage = "Masti obavezno")]
         decimal Masti,
+        decimal ZasiceniSeceri,
         [Required(ErrorMessage = "Vlakna obavezno")]
         decimal Vlakna,
         [Required(ErrorMessage = "Bjelancevine obavezno")]

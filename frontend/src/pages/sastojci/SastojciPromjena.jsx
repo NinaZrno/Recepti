@@ -10,7 +10,6 @@ export default function SastojciPromjena(){
 
     const navigate = useNavigate();
     const [sastojak,setSastojak] = useState({});
-    const [vaucer,setVaucer] = useState(false)
     const routeParams = useParams();
 
     async function dohvatiSastojak(){
@@ -45,12 +44,12 @@ export default function SastojciPromjena(){
         promjena(
             {
                 naziv: podaci.get('naziv'),
-                mjerna_jedinica: podaci.get('mjerna_jedinica'),
+                mjernaJedinica: podaci.get('mjernaJedinica'),
                 podrijetlo: podaci.get('podrijetlo'),
                 energija: parseInt(podaci.get('energija')),
                 ugljikohidrati: parseInt(podaci.get('ugljikohidrati')),
                 masti: parseInt(podaci.get('masti')),
-                zasiceni_seceri: parseInt(podaci.get('zasiceni_seceri')),
+                zasiceniSeceri: parseInt(podaci.get('zasiceniSeceri')),
                 vlakna: parseInt(podaci.get('vlakna')),
                 bjelancevine: parseInt(podaci.get('bjelancevine')),
                 sol: parseInt(podaci.get('sol'))
@@ -65,53 +64,53 @@ export default function SastojciPromjena(){
 
     <Form.Group controlId="naziv">
             <Form.Label>Naziv</Form.Label>
-            <Form.Control type="text" name="naziv" required />
+            <Form.Control type="text" name="naziv" required defaultValue={sastojak.naziv} />
         </Form.Group>
 
-        <Form.Group controlId="mjerna_jedinica">
+        <Form.Group controlId="mjernaJedinica">
             <Form.Label>Mjerna_jedinica</Form.Label>
-            <Form.Control type="text" name="mjerna_jedinica" required />
+            <Form.Control type="text" name="mjernaJedinica" required  defaultValue={sastojak.mjernaJedinica}/>
         </Form.Group>
 
         <Form.Group controlId="podrijetlo">
             <Form.Label>Podrijetlo</Form.Label>
-            <Form.Control type="text" name="podrijetlo" required />
+            <Form.Control type="text" name="podrijetlo" required  defaultValue={sastojak.podrijetlo}/>
         </Form.Group>
 
 
         <Form.Group controlId="energija">
         <Form.Label>Energija</Form.Label>
-        <Form.Control type="number" name="energija" required />
+        <Form.Control type="number" name="energija" required  defaultValue={sastojak.energija}/>
         </Form.Group>
 
         <Form.Group controlId="ugljikohidrati">
         <Form.Label>Ugljikohidrati</Form.Label>
-        <Form.Control type="number" name="ugljikohidrati" required />
+        <Form.Control type="number" name="ugljikohidrati" required  defaultValue={sastojak.ugljikohidrati}/>
         </Form.Group>
 
         <Form.Group controlId="masti">
         <Form.Label>Masti</Form.Label>
-        <Form.Control type="number" name="masti" required />
+        <Form.Control type="number" name="masti" required  defaultValue={sastojak.masti}/>
         </Form.Group>
 
-        <Form.Group controlId="zasiceni_seceri">
+        <Form.Group controlId="zasiceniSeceri">
         <Form.Label>Zasiceni_seceri</Form.Label>
-        <Form.Control type="number" name="zasiceni_seceri" required />
+        <Form.Control type="number" name="zasiceniSeceri" required  defaultValue={sastojak.zasiceniSeceri}/>
         </Form.Group>
 
         <Form.Group controlId="vlakna">
         <Form.Label>Vlakna</Form.Label>
-        <Form.Control type="number" name="vlakna" required />
+        <Form.Control type="number" name="vlakna" required  defaultValue={sastojak.vlakna}/>
         </Form.Group>
 
         <Form.Group controlId="bjelancevine">
         <Form.Label>Bjelancevine</Form.Label>
-        <Form.Control type="number" name="bjelancevine" required />
+        <Form.Control type="number" name="bjelancevine" required  defaultValue={sastojak.bjelancevine}/>
         </Form.Group>
 
         <Form.Group controlId="sol">
         <Form.Label>Sol</Form.Label>
-        <Form.Control type="number" name="sol" required />
+        <Form.Control type="number" name="sol" required  defaultValue={sastojak.sol}/>
         </Form.Group>
         <Row>
             <Col xs={6} sm={6} md={3} lg={2} xl={6} xxl={6}>

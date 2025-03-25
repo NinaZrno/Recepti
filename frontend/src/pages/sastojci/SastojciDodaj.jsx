@@ -26,12 +26,12 @@ export default function SastojciDodaj(){
         dodaj(
             {
                 naziv: podaci.get('naziv'),
-                mjerna_jedinica: podaci.get('mjerna_jedinica'),
+                mjernaJedinica: podaci.get('mjernaJedinica'),
                 podrijetlo: podaci.get('podrijetlo'),
                 energija: parseInt(podaci.get('energija')),
                 ugljikohidrati: parseInt(podaci.get('ugljikohidrati')),
                 masti: parseInt(podaci.get('masti')),
-                zasiceni_seceri: parseInt(podaci.get('zasiceni_seceri')),
+                zasiceniSeceri: parseInt(podaci.get('zasiceniSeceri')),
                 vlakna: parseInt(podaci.get('vlakna')),
                 bjelancevine: parseInt(podaci.get('bjelancevine')),
                 sol: parseInt(podaci.get('sol'))
@@ -49,9 +49,9 @@ export default function SastojciDodaj(){
             <Form.Control type="text" name="naziv" required />
         </Form.Group>
 
-        <Form.Group controlId="mjerna_jedinica">
+        <Form.Group controlId="mjernaJedinica">
             <Form.Label>Mjerna_jedinica</Form.Label>
-            <Form.Control type="text" name="mjerna_jedinica" required />
+            <Form.Control type="text" name="mjernaJedinica" required />
         </Form.Group>
 
         <Form.Group controlId="podrijetlo">
@@ -75,9 +75,9 @@ export default function SastojciDodaj(){
         <Form.Control type="number" name="masti" required />
         </Form.Group>
 
-        <Form.Group controlId="zasiceni_seceri">
+        <Form.Group controlId="zasiceniSeceri">
         <Form.Label>Zasiceni_seceri</Form.Label>
-        <Form.Control type="number" name="zasiceni_seceri" required />
+        <Form.Control type="number" name="zasiceniSeceri" required />
         </Form.Group>
 
         <Form.Group controlId="vlakna">
