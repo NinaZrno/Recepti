@@ -41,7 +41,7 @@ export default function SastojciDodaj(){
 
     return(
     <>
-    Dodavanje recepta
+    Dodavanje sastojka
     <Form onSubmit={odradiSubmit}>
 
         <Form.Group controlId="naziv">
